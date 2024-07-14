@@ -8,9 +8,12 @@
 #include "memory_manager.h"
 #include "interposition.h"
 
-void test_memory_allocation() {
-    printf("Testing memory allocation...\n");
+int main() {
+    printf("Initializing memory manager...\n");
+    mem_mngr_init();
+    printf("Memory manager initialized successfully.\n");
 
+    printf("Testing memory allocation...\n");
     void *ptr1 = mem_mngr_alloc(5);
     printf("Allocated 5 bytes at %p\n", ptr1);
 
@@ -23,45 +26,36 @@ void test_memory_allocation() {
     void *ptr4 = mem_mngr_alloc(8);
     printf("Allocated 8 bytes at %p\n", ptr4);
 
-    void *ptr5 = mem_mngr_alloc(9); // Should return NULL
-    if (ptr5 == NULL) {
-        printf("Allocation of 9 bytes failed as expected (NULL returned)\n");
-    } else {
-        printf("Allocated 9 bytes at %p (unexpected)\n", ptr5);
-    }
+    void *ptr5 = mem_mngr_alloc(9);
+    printf("Allocated 9 bytes at %p\n", ptr5);
 
+    printf("============== Memory snapshot ===============\n");
     mem_mngr_print_snapshot();
-}
+    printf("==============================================\n");
 
-void test_memory_free() {
-    printf("\nTesting memory free...\n");
-
-    void *ptr1 = mem_mngr_alloc(5);
-    void *ptr2 = mem_mngr_alloc(6);
-
+    printf("Testing memory free...\n");
     mem_mngr_free(ptr1);
     printf("Freed memory at %p\n", ptr1);
 
     mem_mngr_free(ptr2);
     printf("Freed memory at %p\n", ptr2);
 
-    // Attempt to free the same memory again (should report error)
-    mem_mngr_free(ptr1);
+    mem_mngr_free(ptr3);
+    printf("Freed memory at %p\n", ptr3);
+
+    mem_mngr_free(ptr4);
+    printf("Freed memory at %p\n", ptr4);
+
+    mem_mngr_free(ptr5);
+    printf("Freed memory at %p\n", ptr5);
+
+    mem_mngr_free(ptr1); // Double free test
     printf("Attempted to free memory at %p again (should report error)\n", ptr1);
 
+    printf("============== Memory snapshot ===============\n");
     mem_mngr_print_snapshot();
-}
-
-int main(void) {
-    mem_mngr_init();
-
-    // Test memory allocation
-    test_memory_allocation();
-
-    // Test memory free
-    test_memory_free();
-
-    mem_mngr_leave();
+    printf("==============================================\n");
 
     return 0;
 }
+

@@ -38,7 +38,7 @@ typedef struct _stru_mem_list
 void mem_mngr_init(void);
 void mem_mngr_leave(void);
 void mem_mngr_print_snapshot(void);
-void * mem_mngr_alloc(size_t size);
+void * mem_mngr_alloc();
 void mem_mngr_free(void * ptr);
 
 

@@ -25,7 +25,7 @@ $(LIBRARY): $(OBJS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Rule to compile the test program
-test_program: test_main.o $(LIBRARY)
+test: test_main.o $(LIBRARY)
 	$(CC) $(CFLAGS) test_main.o -L. -l:$(LIBRARY) -o test_program
 
 # Rule to create test_main.o
