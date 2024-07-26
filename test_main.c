@@ -9,9 +9,7 @@
 #include "interposition.h"
 
 int main() {
-    printf("Initializing memory manager...\n");
     mem_mngr_init();
-    printf("Memory manager initialized successfully.\n");
 
     printf("Testing memory allocation...\n");
     void *ptr1 = mem_mngr_alloc(5);
@@ -29,13 +27,13 @@ int main() {
     void *ptr5 = mem_mngr_alloc(9);
     printf("Allocated 9 bytes at %p\n", ptr5);
 
-    printf("============== Memory snapshot ===============\n");
     mem_mngr_print_snapshot();
     printf("==============================================\n");
 
     printf("Testing memory free...\n");
     mem_mngr_free(ptr1);
     printf("Freed memory at %p\n", ptr1);
+
 
     mem_mngr_free(ptr2);
     printf("Freed memory at %p\n", ptr2);
@@ -52,7 +50,6 @@ int main() {
     mem_mngr_free(ptr1); // Double free test
     printf("Attempted to free memory at %p again (should report error)\n", ptr1);
 
-    printf("============== Memory snapshot ===============\n");
     mem_mngr_print_snapshot();
     printf("==============================================\n");
 
